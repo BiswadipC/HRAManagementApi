@@ -56,6 +56,12 @@ namespace Services.Designation
 
                 try
                 {
+                    if(string.IsNullOrWhiteSpace(designation.Name))
+                    {
+                        message = "Designation Name cannot be blank.";
+                        return message;
+                    } // end if...
+
                     if (designation.IdNo == 0)
                     {
                         Infrastructure.Models.Designation d = new Infrastructure.Models.Designation();
