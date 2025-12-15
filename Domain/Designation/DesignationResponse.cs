@@ -11,4 +11,10 @@ namespace Domain.Designation
         public int IdNo { get; set; }
         public string Name { get; set; } = string.Empty;
     } // class...
+
+    public class DesignationAction
+    {
+        public string Action { get; set; } = string.Empty;
+        public DesignationResponse Data {  get; set; } = new DesignationResponse();
+    } // class...
 }

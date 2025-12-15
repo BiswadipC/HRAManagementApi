@@ -11,6 +11,6 @@ namespace Repository.Designation
     {
         Task<List<DesignationResponse>> GetDesignations();
         Task<DesignationResponse> GetDesignationById(int id);
-        Task<string> Save(DesignationResponse designation);
+        Task<DesignationAction> Save(DesignationResponse designation);
     } // interface...
 }

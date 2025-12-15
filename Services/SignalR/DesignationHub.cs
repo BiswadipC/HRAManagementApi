@@ -10,7 +10,7 @@ namespace Services.SignalR
 {
     public class DesignationHub : Hub
     {
-        public async Task SendMessage(DesignationResponse response)
+        public async Task SendMessage(DesignationAction response)
         {
             await Clients.All.SendAsync("ReceiveMessage", response);
         } // SendMessage...
