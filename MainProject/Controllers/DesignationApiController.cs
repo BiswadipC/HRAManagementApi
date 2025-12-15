@@ -44,11 +44,10 @@ namespace MainProject.Controllers
         [Authorize(Policy = "EDIT_DESIGNATION")]
         public async Task<IActionResult> Save(DesignationResponse designation)
         {
-            string str = await idesignation.Save(designation);
-            List<DesignationResponse> designations = await idesignation.GetDesignations();
-            await hub.Clients.All.SendAsync("ReceiveMessage", designations);
+            var savedDesignation = await idesignation.Save(designation);
+            await hub.Clients.All.SendAsync("ReceiveMessage", savedDesignation);
 
-            return Ok(str);
+            return Ok("Success");
         } // Save...
     } // class...
 }

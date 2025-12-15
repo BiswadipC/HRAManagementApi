@@ -49,17 +49,19 @@ namespace Services.Designation
                  }).ToListAsync();
             } // GetDesignations...
 
-            public async Task<string> Save(DesignationResponse designation)
+            public async Task<DesignationAction> Save(DesignationResponse designation)
             {
                 string message = string.Empty;
                 await using var trans = await context.Database.BeginTransactionAsync();
+                DesignationResponse response = new DesignationResponse();
+                DesignationAction da = new DesignationAction();
 
                 try
                 {
                     if(string.IsNullOrWhiteSpace(designation.Name))
                     {
                         message = "Designation Name cannot be blank.";
-                        return message;
+                        throw new Exception("Designation Name cannot be blank.");
                     } // end if...
 
                     if (designation.IdNo == 0)
@@ -68,6 +70,11 @@ namespace Services.Designation
                         d.Name = designation.Name;
                         await context.AddAsync(d);
                         await context.SaveChangesAsync();
+
+                        response.IdNo = d.IdNo;
+                        response.Name = d.Name;
+                        da.Action = "Insert";
+                        da.Data = response;
                     }
                     else
                     {
@@ -75,6 +82,11 @@ namespace Services.Designation
                         existingDesignation!.Name = designation.Name;
                         context.Update(existingDesignation);
                         await context.SaveChangesAsync();
+
+                        response.IdNo = designation.IdNo;
+                        response.Name = designation.Name;
+                        da.Action = "Update";
+                        da.Data = response;
                     } // end if...
 
                     await trans.CommitAsync();
@@ -90,7 +102,7 @@ namespace Services.Designation
                     trans?.Dispose();
                 }
 
-                return message;
+                return da;
             } // Save...
         } // class...
     } // namespace NDesignation...

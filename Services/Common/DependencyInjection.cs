@@ -26,7 +26,14 @@ namespace Services.Common
     {
         public static void InjectDependency(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSignalR();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
+            services.AddSignalR().AddJsonProtocol(options =>
+            {
+                options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+            });
             services.AddHttpContextAccessor();
             services.AddDbContext<SampleContext>(options =>
             {
