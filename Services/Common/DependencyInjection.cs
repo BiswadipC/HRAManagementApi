@@ -72,7 +72,17 @@ namespace Services.Common
                     };
                 });
             services.AddSingleton<IAuthorizationPolicyProvider, DynamicAuthorizationPolicyProvider>();
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("VIEW_DESIGNATION", policy =>
+                {
+                    policy.RequireClaim("VIEW_DESIGNATION", "View");
+                });
+                options.AddPolicy("EDIT_DESIGNATION", policy =>
+                {
+                    policy.RequireClaim("EDIT_DESIGNATION", "Edit");
+                });
+            });
 
             services.AddControllers();
             services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
