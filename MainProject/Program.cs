@@ -14,6 +14,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("corsapp");
 

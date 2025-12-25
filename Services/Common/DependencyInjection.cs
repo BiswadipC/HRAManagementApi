@@ -43,8 +43,16 @@ namespace Services.Common
 
             services.AddCors(p => p.AddPolicy("corsapp", builder =>
             {
-                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                builder
+                    .WithOrigins(
+                        "https://localhost:7049", // MVC
+                        "http://localhost:4200"   // Angular
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             }));
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
