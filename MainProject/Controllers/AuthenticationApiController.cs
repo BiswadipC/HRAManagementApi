@@ -36,7 +36,7 @@ namespace MainProject.Controllers
                 } // if not a valid user...
 
                 string jwt = await iauth.GenerateJWT(DateTime.UtcNow.AddSeconds(30), user.Username);
-                RefreshTokenClass rtc = await iauth.GenerateRefreshToken(user.Username);
+                RefreshTokenClass rtc = await iauth.GenerateRefreshToken(user.Username, DateTime.UtcNow.AddSeconds(30));
                 string strJson = JsonConvert.SerializeObject(rtc);
 
                 Response.Cookies.Append("AuthCookie", jwt, new CookieOptions()
@@ -69,7 +69,7 @@ namespace MainProject.Controllers
             string username = rft.Username;
 
             string jwt = await iauth.GenerateJWT(DateTime.UtcNow.AddSeconds(30), username);
-            RefreshTokenClass rtc = await iauth.GenerateRefreshToken(username);
+            RefreshTokenClass rtc = await iauth.GenerateRefreshToken(username, DateTime.UtcNow.AddSeconds(30));
             string strJson = JsonConvert.SerializeObject(rtc);
 
             Response.Cookies.Append("AuthCookie", jwt, new CookieOptions()

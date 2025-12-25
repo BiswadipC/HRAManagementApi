@@ -10,5 +10,6 @@ namespace Domain.Authentication
     {
         public string Username {  get; set; } = string.Empty;
         public string TokenValue { get; set; } = string.Empty;
+        public DateTime ExpiresAt {  get; set; }
     } // class...
 }

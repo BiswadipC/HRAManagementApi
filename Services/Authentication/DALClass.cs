@@ -55,6 +55,8 @@ namespace Services.Authentication
                     SecurityAlgorithms.HmacSha256);
 
                 List<Claim> claims = new List<Claim>();
+                Claim c = new Claim(ClaimTypes.NameIdentifier, username);
+                claims.Add(c);
                 foreach(var data in context.ModulePolicyMappings.Where(m => m.Username == username))
                 {
                     var claim = new Claim(data.PolicyName, data.PermissionType);
@@ -75,13 +77,14 @@ namespace Services.Authentication
                 return await Task.Run(() => token);
             } // GenerateJWT...
 
-            public async Task<RefreshTokenClass> GenerateRefreshToken(string username)
+            public async Task<RefreshTokenClass> GenerateRefreshToken(string username, DateTime expiresAt)
             {
                 string token = Guid.NewGuid().ToString();
 
                 RefreshTokenClass rft = new RefreshTokenClass();
                 rft.Username = username;
                 rft.TokenValue = token;
+                rft.ExpiresAt = expiresAt;
 
                 var existingUser = context.Users.FirstOrDefault(x =>  x.Username == username);
                 existingUser!.RefreshToken = token;

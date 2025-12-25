@@ -12,7 +12,7 @@ namespace Repository.Authentication
     {
         Task<bool> IsAuthenticated(UserResponse user);
         Task<string> GenerateJWT(DateTime expiresAt, string username);
-        Task<RefreshTokenClass> GenerateRefreshToken(string username);
+        Task<RefreshTokenClass> GenerateRefreshToken(string username, DateTime expiresAt);
         Task<List<dynamic>> GetClaimsByUserName();
     } // interface...
 }
