@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -95,7 +96,8 @@ namespace Services.Common
             services.AddControllers();
             services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddEndpointsApiExplorer();
-            
+
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddScoped<IDapperService, Services.Common.DapperService>();
             services.AddScoped<IUserResponse, Services.Users.NUsers.DALClass>();
             services.AddScoped<IAuthenticationResponse, Services.Authentication.NAuthentication.DALClass>();
